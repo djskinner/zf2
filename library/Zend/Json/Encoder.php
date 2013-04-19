@@ -147,10 +147,15 @@ class Encoder
             }
         }
 
-        $className = get_class($value);
-        return '{"__className":'
-            . $this->_encodeString($className)
-            . $props . '}';
+        if (isset($this->options['disableClassNameDecoding'])
+                    && $this->options['disableClassNameDecoding']===true) {
+            return '{' . $props . '}';
+        } else {
+            $className = get_class($value);
+            return '{"__className":'
+                . $this->_encodeString($className)
+                . $props . '}';                        
+        }
     }
 
 
